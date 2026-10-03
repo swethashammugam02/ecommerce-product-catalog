@@ -42,3 +42,99 @@ const products = [
         description: "Modern smartphone with useful features and sleek design."
     }
 ];
+
+
+// Display products
+function displayProducts() {
+
+    const container = document.getElementById("productContainer");
+
+    container.innerHTML = "";
+
+    products.forEach(product => {
+
+        const card = document.createElement("div");
+
+        card.className = "product-card";
+
+        card.innerHTML = `
+            <img
+                src="${product.image}"
+                alt="${product.name}"
+                loading="lazy"
+            >
+
+            <h3>${product.name}</h3>
+
+            <span class="price">₹${product.price}</span>
+
+            <p>${product.description}</p>
+
+            <button
+                class="btn"
+                onclick="showProduct(${product.id})"
+            >
+                View Details
+            </button>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+
+// Show product details
+function showProduct(id) {
+
+    const product = products.find(item => item.id === id);
+
+    if (!product) {
+        return;
+    }
+
+    const details = document.getElementById("productDetails");
+
+    details.innerHTML = `
+        <div class="details-card">
+
+            <img
+                src="${product.image}"
+                alt="${product.name}"
+            >
+
+            <h2>${product.name}</h2>
+
+            <h3 class="price">₹${product.price}</h3>
+
+            <p>${product.description}</p>
+
+            <button
+                class="btn"
+                onclick="backToProducts()"
+            >
+                Back to Products
+            </button>
+
+        </div>
+    `;
+
+    // Scroll directly to product details
+    document.getElementById("product-details").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+
+// Back to products
+function backToProducts() {
+
+    document.getElementById("products").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+
+// Load products
+document.addEventListener("DOMContentLoaded", function () {
+    displayProducts();
+});
